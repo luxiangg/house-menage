@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
 import { UserLogin, UserManage } from "@/router/modules/user"
 import { StaffManage } from "@/router/modules/staff"
+import { Houses } from "@/router/modules/houses"
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -9,6 +10,7 @@ const routes: Array<RouteRecordRaw> = [
   UserLogin,
   UserManage,
   StaffManage,
+  Houses,
 ]
 
 const router = createRouter({
