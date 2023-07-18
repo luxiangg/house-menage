@@ -9,6 +9,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "ant-design-vue": "^4.0.0",
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
@@ -57,7 +58,8 @@
       "vue/no-unused-vars": "off",
       "vue/no-unused-components": "off",
       "prefer-const": "off",
-      "no-undef": "off"
+      "no-undef": "off",
+      "@typescript-eslint/no-unused-vars": "off"
     }
   },
   "browserslist": [
