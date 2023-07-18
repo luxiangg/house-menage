@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
-import { UserLogin, UserManage } from "@/router/modules/user"
+import { UserLogin, UserManage, UserRegistry } from "@/router/modules/user"
 import { Home } from "@/router/modules/home"
 import { NotFoundRedirect } from "@/router/modules/NotFoundRedirect"
 const routes: Array<RouteRecordRaw> = [
@@ -19,6 +19,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   UserLogin,
   UserManage,
+  UserRegistry,
   Home,
   NotFoundRedirect,
 ]
