@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve:dev": "vue-cli-service serve --mode dev",
+    "serve:pro": "vue-cli-service serve --mode pro",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "prepare": "husky install"
@@ -60,7 +61,8 @@
       "vue/no-unused-components": "off",
       "prefer-const": "off",
       "no-undef": "off",
-      "@typescript-eslint/no-unused-vars": "off"
+      "@typescript-eslint/no-unused-vars": "off",
+      "prettier/prettier":"off"
     }
   },
   "browserslist": [

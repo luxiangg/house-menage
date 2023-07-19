@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios"
 const request: AxiosInstance = axios.create({
-  timeout: 3000,
+  timeout: 5000,
 })
 request.interceptors.request.use(
   (config) => {
