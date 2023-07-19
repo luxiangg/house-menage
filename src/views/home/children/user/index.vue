@@ -38,7 +38,7 @@ const searchVal = ref<string>("")
 
 const onSearch = async (searchValue: string) => {
   console.log("or use this.value", searchVal.value)
-  let result = await request.get("/api/user/search", {
+  let result = await request.get("/dev/user/search", {
     params: {
       searchVal: searchValue,
     },
@@ -47,12 +47,12 @@ const onSearch = async (searchValue: string) => {
   data.value = result.data.data
 }
 const getUserList = async () => {
-  let result = await request.get("/api/user/list")
+  let result = await request.get("/dev/user/list")
   console.log(result)
   data.value = result.data.data
 }
 const delUser = async (uid: number) => {
-  let result = await request.get("/api/user/delete", {
+  let result = await request.get("/dev/user/delete", {
     params: {
       id: uid,
     },

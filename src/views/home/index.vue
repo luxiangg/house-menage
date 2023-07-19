@@ -6,7 +6,9 @@
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
         <a-menu-item v-for="item in routes" :key="item.name">
           <pie-chart-outlined />
-          <span>{{ item.title }}</span>
+          <span
+            ><router-link :to="{ name: item.name }">{{ item.title }}</router-link></span
+          >
         </a-menu-item>
       </a-menu>
     </a-layout-sider>

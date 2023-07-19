@@ -108,7 +108,7 @@ const handleOk = async () => {
         addStaff()
         getStaffList()
       } else {
-        let result = await request.post("/api/staff/staffEdit", formState.value)
+        let result = await request.post("/dev/staff/staffEdit", formState.value)
         console.log(result)
         getStaffList()
       }
@@ -121,7 +121,7 @@ const data = ref([])
 const searchVal = ref<string>("")
 const onSearch = async (searchValue: string) => {
   console.log("or use this.value", searchVal.value)
-  let result = await request.get("/api/staff/staffSearch", {
+  let result = await request.get("/dev/staff/staffSearch", {
     params: {
       searchVal: searchValue,
     },
@@ -130,11 +130,11 @@ const onSearch = async (searchValue: string) => {
   data.value = result.data.data
 }
 const getStaffList = async () => {
-  let result = await request.get("/api/staff/staffList")
+  let result = await request.get("/dev/staff/staffList")
   data.value = result.data.data
 }
 const delStaff = async (id: number) => {
-  let result = await request.get("/api/staff/staffDel", {
+  let result = await request.get("/dev/staff/staffDel", {
     params: {
       id,
     },
@@ -148,7 +148,7 @@ const editStaff = async (value: FormState) => {
   formState.value = value
 }
 const addStaff = async () => {
-  let result = await request.post("/api/staff/staffAdd", formState.value)
+  let result = await request.post("/dev/staff/staffAdd", formState.value)
   console.log(result)
 }
 const reset = () => {

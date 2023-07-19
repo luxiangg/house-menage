@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-button type="primary" @click="showModal">新增</a-button>
-    <a-modal v-model:visible="visible" title="Basic Modal" @ok="handleOk" keyboard="true">
+    <a-modal v-model:open="open" title="Basic Modal" @ok="handleOk" :keyboard="true">
       <a-form :model="formState" :label-col="labelCol" :wrapper-col="wrapperCol">
         <a-form-item label="楼盘名称">
           <a-input v-model:value="formState.xq" />
@@ -47,15 +47,15 @@ const formState: UnwrapRef<FormState> = reactive({
 })
 const onSubmit = () => {
   console.log("submit!", toRaw(formState))
-  visible.value = false
+  open.value = false
 }
-const visible = ref<boolean>(false)
+const open = ref<boolean>(false)
 
 const showModal = () => {
-  visible.value = true
+  open.value = true
 }
 const handleOk = (e: MouseEvent) => {
   console.log(e)
-  visible.value = false
+  open.value = false
 }
 </script>
