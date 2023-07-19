@@ -26,7 +26,7 @@
 <script lang="ts">
 import { useRoute } from "vue-router"
 import { defineComponent, reactive, toRefs, watch } from "vue"
-import { MenuFoldOutlined, MenuUnfoldOutlined, PieChartOutlined, MailOutlined, DesktopOutlined, InboxOutlined, AppstoreOutlined } from "@ant-design/icons-vue"
+import { PieChartOutlined } from "@ant-design/icons-vue"
 import Header from "@/components/layout/Header.vue"
 
 export default defineComponent({
@@ -68,7 +68,6 @@ export default defineComponent({
 .home {
   width: 100%;
   height: 100%;
-  background: red;
   .left {
     width: 10%;
     height: 90%;
