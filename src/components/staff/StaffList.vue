@@ -47,6 +47,7 @@ interface FormState {
   tel: string
   password?: string
 }
+//表格字段
 const columns = [
   {
     title: "部门名称",
@@ -98,6 +99,7 @@ const showModal = () => {
   isEdit.value = "新增"
   open.value = true
 }
+//点击确定事件函数
 const handleOk = async () => {
   formRef.value
     .validateFields()
@@ -117,7 +119,7 @@ const handleOk = async () => {
       console.log(err)
     })
 }
-const data = ref([])
+const data = ref([]) //表格数据列表
 const searchVal = ref<string>("")
 const onSearch = async (searchValue: string) => {
   console.log("or use this.value", searchVal.value)
@@ -129,10 +131,12 @@ const onSearch = async (searchValue: string) => {
   console.log(result)
   data.value = result.data.data
 }
+// 获取表格列表数据函数
 const getStaffList = async () => {
   let result = await request.get("/dev/staff/staffList")
   data.value = result.data.data
 }
+// 删除
 const delStaff = async (id: number) => {
   let result = await request.get("/dev/staff/staffDel", {
     params: {
@@ -147,6 +151,7 @@ const editStaff = async (value: FormState) => {
   open.value = true
   formState.value = value
 }
+
 const addStaff = async () => {
   let result = await request.post("/dev/staff/staffAdd", formState.value)
   console.log(result)

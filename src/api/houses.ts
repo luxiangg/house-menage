@@ -5,7 +5,6 @@
  * @Last Modified time: 2023-07-19 19:39:56
  */
 import request from "@/utils/request"
-import { HousesManageType } from "@/interface/model/houses"
 import { API_HOUSES } from "@/config/api/houses"
 
 interface HousesServiceInterface {

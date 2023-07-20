@@ -22,10 +22,22 @@ const routes: Array<RouteRecordRaw> = [
   Home,
   NotFoundRedirect,
 ]
-
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+})
+//路由守卫
+router.beforeEach((to, from, next) => {
+  if (to.name !== "UserLogin") {
+    if (localStorage.getItem("token")) {
+      next()
+    } else {
+      window.alert("登录状态过期，请重新登陆")
+      next({ name: "UserLogin" })
+    }
+  } else {
+    next()
+  }
 })
 
 export default router
