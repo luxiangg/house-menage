@@ -213,7 +213,7 @@ function handleResizeColumn(w: any, col: any) {
 }
 const showModal = (record: any) => {
   data_item.value = record
-  console.log(data_item.value,'data_item.value');
+  console.log(data_item.value, "data_item.value")
   checked.value = data_item.value.status == 1 ? true : false
   off()
 }
@@ -237,15 +237,15 @@ const handleOk = (e: MouseEvent) => {
       payload: obj,
     })
     data.value = store.state.information.data
-      data_item.value = ""
-      on()
+    data_item.value = ""
+    on()
   } else {
     // console.log(value2.value.$d);
     on()
   }
 }
 const on = () => {
-  console.log(data_item.value,'data_item.value');
+  console.log(data_item.value, "data_item.value")
   open.value = false
 }
 function dateFtt(fmt: any, date: any) {

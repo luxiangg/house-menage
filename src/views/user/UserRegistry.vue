@@ -7,26 +7,30 @@
       <a-form-item label="密码" name="password" :rules="[{ required: true, message: 'Please input your password!' }]">
         <a-input-password v-model:value="formState.password" />
       </a-form-item>
+      <a-form-item label="手机号" name="tel" :rules="[{ required: true, message: 'Please input your tel!' }]">
+        <a-input-password v-model:value="formState.tel" />
+      </a-form-item>
       <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-        <a-button type="primary" html-type="submit">登录</a-button>
+        <a-button type="primary" html-type="submit">注册</a-button>
       </a-form-item>
     </a-form>
   </div>
 </template>
 <script lang="ts" setup>
 import request from "../../utils/request"
-import { toRaw, ref } from "vue"
+import { ref } from "vue"
 interface FormState {
   username: string
   password: string
+  tel: string
 }
 const formState = ref<FormState>({
   username: "",
   password: "",
+  tel: "",
 })
 const onFinish = async (values: any) => {
-  console.log("Success:", values)
-  let result = await request.post("/api/login", formState.value)
+  let result = await request.post("/api/registry", formState.value)
   console.log(result)
 }
 const onFinishFailed = (errorInfo: any) => {

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
-import { UserLogin, UserManage } from "@/router/modules/user"
+import { UserLogin, UserRegistry } from "@/router/modules/user"
 import { Home } from "@/router/modules/home"
 import { NotFoundRedirect } from "@/router/modules/NotFoundRedirect"
 const routes: Array<RouteRecordRaw> = [
@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "NotFoundRedirect" */ "@/views/NotFoundRedirect/404.vue"),
   },
   UserLogin,
-  UserManage,
+  UserRegistry,
   Home,
   NotFoundRedirect,
 ]

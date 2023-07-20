@@ -27,25 +27,25 @@ export default {
       localStorage.setItem("data", JSON.stringify(state.data))
     },
     SAVE_SEARCH: (state: any, { payload }: any): void => {
-      let data = state.data.filter((value: any, index: number) => {
+      const data = state.data.filter((value: any, index: number) => {
         return value.tit.includes(payload)
       })
       state.data = [...data]
     },
     SAVE_SELECT: (state: any, { payload }: any): void => {
-      let data = state.data.filter((value: any, index: number) => {
+      const data = state.data.filter((value: any, index: number) => {
         return value.status == payload
       })
       state.data = data
     },
     SAVE_DATE: (state: any, { payload }: any): void => {
-      let data = state.data
-    let index = data.findIndex((value:any, index:number) => {
-      return value.id === payload.id
-    })
-    if(index !== -1){
-      data[index] = payload
-    }
+      const data = state.data
+      const index = data.findIndex((value: any, index: number) => {
+        return value.id === payload.id
+      })
+      if (index !== -1) {
+        data[index] = payload
+      }
       state.data = data
       localStorage.setItem("data", JSON.stringify(state.data))
     },
