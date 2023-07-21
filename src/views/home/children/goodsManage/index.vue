@@ -74,7 +74,7 @@ onMounted(() => {
   list()
 })
 const list = async () => {
-  const data = (await request.get("/api/order")).data.data
+  const data = (await request.get("/dev/order")).data.data
   arr.value = data.sort((a: any, b: any) => {
     return a.id - b.id
   })

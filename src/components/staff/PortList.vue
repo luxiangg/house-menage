@@ -96,7 +96,7 @@ const handleOk = async () => {
         addPort()
         getUserList()
       } else {
-        let result = await request.post("/api/staff/portEdit", formState.value)
+        let result = await request.post("/dev/staff/portEdit", formState.value)
         console.log(result)
         getUserList()
       }
@@ -109,7 +109,7 @@ const data = ref([])
 const searchVal = ref<string>("")
 const onSearch = async (searchValue: string) => {
   console.log("or use this.value", searchVal.value)
-  let result = await request.get("/api/staff/portSearch", {
+  let result = await request.get("/dev/staff/portSearch", {
     params: {
       searchVal: searchValue,
     },
@@ -118,11 +118,11 @@ const onSearch = async (searchValue: string) => {
   data.value = result.data.data
 }
 const getUserList = async () => {
-  let result = await request.get("/api/staff/portList")
+  let result = await request.get("/dev/staff/portList")
   data.value = result.data.data
 }
 const delUser = async (id: number) => {
-  let result = await request.get("/api/staff/portDel", {
+  let result = await request.get("/dev/staff/portDel", {
     params: {
       id,
     },
@@ -136,7 +136,7 @@ const editPort = async (value: FormState) => {
   formState.value = value
 }
 const addPort = async () => {
-  let result = await request.post("/api/staff/portAdd", formState.value)
+  let result = await request.post("/dev/staff/portAdd", formState.value)
   console.log(result)
 }
 const reset = () => {

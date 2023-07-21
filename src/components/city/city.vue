@@ -14,14 +14,23 @@
         <a-select-option value="lucy">Lucy</a-select-option>
       </a-select>
     </a-space>
-    <a-input v-model:value="value" placeholder="关键字" size="200px" style="width: 250px" />
-    <a-button type="primary">搜索</a-button>
+    <a-input-search v-model:value="value" placeholder="input search text" enter-button="Search" size="large" @search="onSearch" />
   </div>
 </template>
 <script lang="ts" setup>
 import { SelectTypes } from "ant-design-vue/es/select"
+import { useStore } from "vuex"
 import { ref } from "vue"
+const store = useStore()
+
 const value = ref<string>("")
+
+const onSearch = async (searchValue: string) => {
+  console.log("use value", searchValue)
+  console.log("or use this.value", value.value)
+  console.log(store.state.houses.hosing)
+  store.state.houses.hosing = store.state.houses.hosing.filter((item: any) => item.xq.includes(searchValue))
+}
 const options1 = ref<SelectTypes["options"]>([
   {
     value: "jack",
