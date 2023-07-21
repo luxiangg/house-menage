@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue"
 import request from "../../../../utils/request"
+import { OrderItem } from "@/interface/model/order"
 const columns = [
   {
     title: "序号",
@@ -67,39 +68,41 @@ const columns = [
     key: "Controls",
   },
 ]
-let arr = ref([])
+let arr = ref<Array<OrderItem>>([])
 let inputValue = ref()
-let dataSource = ref([])
+let dataSource = ref<Array<OrderItem>>([])
 onMounted(() => {
   list()
 })
 const list = async () => {
   const data = (await request.get("/dev/order")).data.data
-  arr.value = data.sort((a: any, b: any) => {
+  arr.value = data.sort((a: OrderItem, b: OrderItem) => {
     return a.id - b.id
   })
-  dataSource.value = data.sort((a: any, b: any) => {
+  dataSource.value = data.sort((a: OrderItem, b: OrderItem) => {
     return a.id - b.id
   })
 }
-const selectChange = (e: any) => {
-  if (e == "请选择") {
+const selectChange = (selectVal: string) => {
+  if (selectVal == "请选择") {
     dataSource.value = arr.value
   } else {
-    const filterArr = arr.value.filter((item: any, index: any) => {
-      return item.type == e
+    const filterArr = arr.value.filter((item: OrderItem) => {
+      return item.type == selectVal
     })
     dataSource.value = filterArr
   }
 }
 const inputFocus = (e: any) => {
+  console.log(e, "eee")
+
   e.target.value = ""
 }
 const inquire = () => {
   if (inputValue.value.value == "") {
     dataSource.value = arr.value
   } else {
-    const filterArr = arr.value.filter((item: any, index: any) => {
+    const filterArr = arr.value.filter((item: OrderItem) => {
       return item.username == inputValue.value.value || item.tel == inputValue.value.value || item.serial == inputValue.value.value
     })
     dataSource.value = filterArr

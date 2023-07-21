@@ -42,32 +42,6 @@
     "prettier": "^2.4.1",
     "typescript": "~4.5.5"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended",
-      "@vue/typescript/recommended",
-      "plugin:prettier/recommended"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 2020
-    },
-    "rules": {
-      "vue/multi-word-component-names": "off",
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-namespace": "off",
-      "vue/no-unused-vars": "off",
-      "vue/no-unused-components": "off",
-      "prefer-const": "off",
-      "no-undef": "off",
-      "@typescript-eslint/no-unused-vars": "off",
-      "prettier/prettier": "off"
-    }
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
@@ -76,6 +50,6 @@
   ],
   "lint-staged": {
     "*.css": "stylelint --fix",
-    "*.{js,vue,ts,md,css}": "prettier --write"
+    "*.{js,vue,ts,md,css}": "prettier --write \"./src/**/*.{js,ts,jsx,json,tsx,vue,css,less,sass}\""
   }
 }

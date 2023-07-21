@@ -2,7 +2,6 @@ const { defineConfig } = require("@vue/cli-service")
 const dynamicProxyName = process.env.VUE_APP_API_URL
 module.exports = defineConfig({
   transpileDependencies: true,
-  lintOnSave: true,
   devServer: {
     // 配置host
     host: "localhost",
@@ -11,7 +10,8 @@ module.exports = defineConfig({
     // 跨域代理
     proxy: {
       [dynamicProxyName]: {
-        target: "http://127.0.0.1:7001",
+        target: "http://localhost:7001",
+        changeOrigin: true,
         pathRewrite: {
           [`^${dynamicProxyName}`]: "",
         },

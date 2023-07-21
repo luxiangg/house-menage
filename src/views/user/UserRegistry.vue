@@ -29,6 +29,7 @@ const formState = ref<FormState>({
   password: "",
   tel: "",
 })
+//表单字段校验通过
 const onFinish = async (values: any) => {
   let result = await request.post("/api/registry", formState.value)
   console.log(result)

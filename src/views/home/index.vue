@@ -7,7 +7,7 @@
         <a-menu-item v-for="item in routes" :key="item.name">
           <pie-chart-outlined />
           <span
-            ><router-link :to="item.path">{{ item.title }}</router-link></span
+            ><router-link :to="{ name: item.name }">{{ item.title }}</router-link></span
           >
         </a-menu-item>
       </a-menu>
