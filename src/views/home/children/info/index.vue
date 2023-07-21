@@ -6,8 +6,8 @@
         <li>搜索：<input type="text" placeholder="资讯名称" v-model="value" class="search_ipt" /></li>
         <li>状态： <a-select v-model:value="value1" label-in-value style="width: 120px" :options="options" @change="handleChange"></a-select></li>
         <li>
-          <a-button @click="searchBtn">查询</a-button>&nbsp;
-          <a-button type="primary">新增</a-button>
+          <a-button @click="searchBtn">查询</a-button>&nbsp; <a-button type="primary" @click="addInfoItem">新增</a-button>&nbsp;
+          <a-button type="primary" @click="getList">重置</a-button>
         </li>
       </ul>
     </div>
@@ -65,11 +65,15 @@
           >
             <li style="width: 100%; height: 50px; margin-top: 10px">
               <span style="display: inline-block; width: 80px; float: left">文章标题:</span>
-              <input type="text" v-model="ipt2" style="width: 200px; height: 30px; border-radius: 10px; border: 1px solid #ccc" :placeholder="data_item.tit" />
+              <input type="text" v-model="tit" style="width: 200px; height: 30px; border-radius: 10px; border: 1px solid #ccc" :placeholder="data_item.tit" />
             </li>
             <li style="width: 100%; height: 50px; margin-top: 10px">
               <span style="display: inline-block; width: 80px; float: left">创建人:</span>
-              <input type="text" v-model="ipt3" style="width: 200px; height: 30px; border-radius: 10px; border: 1px solid #ccc" :placeholder="data_item.name" />
+              <input type="text" v-model="name" style="width: 200px; height: 30px; border-radius: 10px; border: 1px solid #ccc" :placeholder="data_item.name" />
+            </li>
+            <li style="width: 100%; height: 50px; margin-top: 10px">
+              <span style="display: inline-block; width: 80px; float: left">价格:</span>
+              <input type="text" v-model="price" style="width: 200px; height: 30px; border-radius: 10px; border: 1px solid #ccc" :placeholder="data_item.price" />
             </li>
             <li style="width: 100%; height: 50px; margin-top: 10px">
               <span style="display: inline-block; width: 80px; float: left">创建日期: </span>
@@ -97,6 +101,8 @@ import type { TableColumnsType } from "ant-design-vue"
 import { onMounted, ref } from "vue"
 import { useInfoSerivice } from "@/api/info"
 import type { Dayjs } from "dayjs"
+import { notification } from "ant-design-vue"
+import type { NotificationPlacement } from "ant-design-vue"
 const value2 = ref<Dayjs>()
 const open = ref<boolean>(false)
 const store = useStore()
@@ -108,6 +114,15 @@ const infoSerivice = useInfoSerivice()
 const data_item = ref()
 const ipt2 = ref("")
 const ipt3 = ref("")
+const flag = ref(false)
+const strFlag = ref("")
+const created_at = ref("")
+const date = ref("")
+const name = ref("")
+const price = ref("")
+const tit = ref("")
+const updated_at = ref("")
+
 const options = ref<SelectProps["options"]>([
   {
     value: "1",
@@ -155,103 +170,146 @@ const columns = ref<TableColumnsType>([
     key: "action",
   },
 ])
-const handleChange: SelectProps["onChange"] = (value: any) => {
-  if (value.key == 1) {
-    store.dispatch({
-      type: "SAVE_SELECT_DATA",
-      payload: 1,
-    })
+// 通过状态查询模糊搜索
+const handleChange: SelectProps["onChange"] = async (value: any) => {
+  let num = value.label === "开启" ? 1 : 0
+  const result = await infoSerivice.searchCheckInfoData({ status: num })
+  if (result.code === 200) {
+    data.value = result.data
+    on()
+    openNotification("top", "查找成功")
   } else {
-    store.dispatch({
-      type: "SAVE_SELECT_DATA",
-      payload: 0,
-    })
+    on()
+    openNotification("top", "查找失败")
   }
-
-  data.value = store.state.information.data
-}
-const searchBtn = () => {
-  if (value.value) {
-    store.dispatch({
-      type: "SAVE_SEARCH_DATA",
-      payload: value.value,
-    })
-    data.value = store.state.information.data
-  } else {
-    getList()
-  }
-}
-const getList = async () => {
-  const result = await infoSerivice.getInfoData()
-  // data.value = result.data
-  store.dispatch({
-    type: "SAVE_USER_DATA",
-    payload: result.data,
-  })
-  data.value = store.state.information.data
-}
-const switchChange = async (item: any) => {
-  store.dispatch({
-    type: "SAVE_SET_DATA",
-    payload: item.id,
-  })
-  data.value = store.state.information.data
-  // const result = await infoSerivice.setInfoData({ id: item.id })
-  // console.log(result.data, "result")
-}
-const deleteInfo = async (id: string) => {
-  store.dispatch({
-    type: "SAVE_DELETE_DATA",
-    payload: id,
-  })
-  data.value = store.state.information.data
-  // const result = await infoSerivice.delInfoData({ id })
-  // console.log(result.data, "result")
 }
 function handleResizeColumn(w: any, col: any) {
   col.width = w
 }
+// 默认获取数据
+const getList = async () => {
+  const result = await infoSerivice.getInfoData()
+  data.value = result.data
+}
+// 通过姓名查找
+const searchBtn = async () => {
+  if (value.value) {
+    const result = await infoSerivice.searchInfoData({ name: value.value })
+    if (result.code === 200) {
+      data.value = result.data
+      on()
+      openNotification("top", "查找成功")
+    } else {
+      on()
+      openNotification("top", "查找失败")
+    }
+  }
+}
+// 点击编辑以及查看
 const showModal = (record: any) => {
+  flag.value = false
   data_item.value = record
-  console.log(data_item.value,'data_item.value');
+  strFlag.value = "编辑"
   checked.value = data_item.value.status == 1 ? true : false
   off()
 }
+// 设置开关
+const switchChange = async (item: any) => {
+  const { created_at, date, id, name, price, status, tit, updated_at } = item
+  let num = status === 0 ? 1 : 0
+  let time = "0000-00-00 00:00:00"
+  let obj: any = {
+    created_at,
+    id,
+    name,
+    updated_at: time,
+    date,
+    price,
+    status: num,
+    tit,
+  }
+
+  const result = await infoSerivice.setInfoData(obj)
+  if (result.code === 200) {
+    getList()
+    openNotification("top", result.message)
+  } else {
+    openNotification("top", result.message)
+  }
+}
+// 删除操作
+const deleteInfo = async (id: string) => {
+  const result = await infoSerivice.delInfoData({ id })
+  if (result.code === 200) {
+    openNotification("top", result.message)
+    getList()
+  } else {
+    openNotification("top", result.message)
+  }
+}
+
 const off = () => {
   open.value = true
 }
-const handleOk = (e: MouseEvent) => {
-  if (ipt2.value && ipt3.value) {
-    let date = dateFtt("yyyy-MM-dd hh:mm:ss", value2.value)
+// 编辑
+const handleOk = async (e: MouseEvent) => {
+  off()
+  if (strFlag.value === "新增") {
+    const id = data.value.length + 4
+    let time = new Date()
+    let date1 = dateFtt("yyyy-MM-dd", time)
     let obj = {
-      created_at: date,
-      date: data_item.value.date,
-      id: data_item.value.id,
-      name: ipt3.value,
-      price: data_item.value.price,
+      created_at: "0000-00-00 00:00:00",
+      id: id,
+      name: name.value,
+      date: date1,
+      price: price.value,
       status: checked.value ? 1 : 0,
-      tit: ipt2.value,
+      tit: tit.value,
+      updated_at: "0000-00-00 00:00:00",
     }
-    store.dispatch({
-      type: "SAVE_SET_DATE",
-      payload: obj,
-    })
-    data.value = store.state.information.data
-      data_item.value = ""
+
+    const result = await infoSerivice.addInfoData(obj)
+    if (result.code === 200) {
+      getList()
       on()
+      openNotification("top", result.message)
+    } else {
+      openNotification("top", result.message)
+    }
   } else {
-    // console.log(value2.value.$d);
-    on()
+    const id = data.value.length + 3
+    let time = new Date()
+    let date1 = dateFtt("yyyy-MM-dd", time)
+    let obj: any = {
+      created_at: "0000-00-00 00:00:00",
+      id: id,
+      name: name.value,
+      date: date1,
+      price: price.value,
+      status: checked.value,
+      tit: tit.value,
+      updated_at: "0000-00-00 00:00:00",
+    }
+
+    const result = await infoSerivice.setInfoData(obj)
+    if (result.code) {
+      openNotification("top", result.message)
+      getList()
+      allNull()
+      setTimeout(() => {
+        on()
+      }, 100)
+    }
   }
 }
 const on = () => {
-  console.log(data_item.value,'data_item.value');
   open.value = false
 }
 function dateFtt(fmt: any, date: any) {
   if (!date) date = new Date()
   if (!(date instanceof Date)) date = new Date(date)
-  var o = {
+  var o: any = {
     "M+": date.getMonth() + 1, //月份
     "d+": date.getDate(), //日
     "h+": date.getHours(), //小时
@@ -264,12 +322,52 @@ function dateFtt(fmt: any, date: any) {
   for (var k in o) if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length))
   return fmt
 }
-
+// 点击新增
+const addInfoItem = () => {
+  strFlag.value = "新增"
+  flag.value = true
+  const time = new Date()
+  let date1 = dateFtt("yyyy-MM-dd", time)
+  let num = data.value.length + 4
+  data_item.value = {
+    created_at: "0000-00-00 00:00:00",
+    date: date1,
+    id: num,
+    name: "请输入姓名",
+    price: "请输入价格",
+    status: 0,
+    tit: "请输入文章标题",
+    updated_at: "0000-00-00 00:00:00",
+  }
+  off()
+}
+const openNotification = (placement: NotificationPlacement, msg: string) => {
+  notification.open({
+    message: `Notification ${placement}`,
+    description: msg,
+    placement,
+  })
+}
+const allNull = () => {
+  data_item.value = {
+    created_at: "0000-00-00 00:00:00",
+    date: "",
+    id: "",
+    name: "请输入姓名",
+    price: "请输入价格",
+    status: 0,
+    tit: "请输入文章标题",
+    updated_at: "0000-00-00 00:00:00",
+  }
+  tit.value = ""
+  name.value = ""
+  price.value = ""
+  // value2.value = null
+}
 onMounted(() => {
   getList()
 })
 </script>
-
 <style lang="less" scoped>
 .info {
   width: 100%;

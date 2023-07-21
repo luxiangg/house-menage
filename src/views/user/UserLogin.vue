@@ -14,26 +14,26 @@
   </div>
 </template>
 <script lang="ts" setup>
-import request from "../../utils/request"
-import { reactive, toRaw } from "vue"
+import request from '@/utils/request'
+import { reactive, toRaw } from 'vue'
 interface FormState {
   username: string
   password: string
 }
 const formState = reactive<FormState>({
-  username: "",
-  password: "",
+  username: '',
+  password: ''
 })
 const onFinish = async (values: any) => {
-  console.log("Success:", values)
+  console.log('Success:', values)
   let { username, password } = values
-  console.log(username, "uu")
+  console.log(username, 'uu')
 
-  let result = await request.post("/api/login", toRaw(values))
+  let result = await request.post('/api/login', toRaw(values))
   console.log(result)
 }
 const onFinishFailed = (errorInfo: any) => {
-  console.log("Failed:", errorInfo)
+  console.log('Failed:', errorInfo)
 }
 </script>
 <style lang="less">

@@ -10,7 +10,7 @@ request.interceptors.request.use(
     if (localStorage.getItem("token")) {
       config.headers["Authorization"] = localStorage.getItem("token")
     }
-    config.headers["Content-Type"] = "json/application"
+    // config.headers["Content-Type"] = "json/application"
     return config
   },
   function (error: AxiosError) {

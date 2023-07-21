@@ -14,14 +14,14 @@
 </template>
 
 <script lang="ts">
-import { useRoute } from "vue-router"
-import { defineComponent, reactive, toRefs, watch } from "vue"
-import { MenuFoldOutlined, MenuUnfoldOutlined, PieChartOutlined, MailOutlined, DesktopOutlined, InboxOutlined, AppstoreOutlined } from "@ant-design/icons-vue"
-import Header from "@/components/layout/Header.vue"
-import Menu from "@/components/layout/Menu.vue"
-import Content from "@/components/layout/Content.vue"
+import { useRoute } from 'vue-router'
+import { defineComponent, reactive, toRefs, watch } from 'vue'
+import { MenuFoldOutlined, MenuUnfoldOutlined, PieChartOutlined, MailOutlined, DesktopOutlined, InboxOutlined, AppstoreOutlined } from '@ant-design/icons-vue'
+import Header from '@/components/layout/Header.vue'
+import Menu from '@/components/layout/Menu.vue'
+import Content from '@/components/layout/Content.vue'
 export default defineComponent({
-  name: "HomePage",
+  name: 'HomePage',
   components: {
     Header,
     Menu,
@@ -33,9 +33,9 @@ export default defineComponent({
     const data: any = router.matched[0].children
     const state = reactive({
       collapsed: false,
-      selectedKeys: ["1"],
-      openKeys: ["sub1"],
-      preOpenKeys: ["sub1"],
+      selectedKeys: ['1'],
+      openKeys: ['sub1'],
+      preOpenKeys: ['sub1']
     })
     watch(
       () => state.openKeys,
@@ -51,14 +51,13 @@ export default defineComponent({
     return {
       ...toRefs(state),
       toggleCollapsed,
-      data,
+      data
     }
-  },
+  }
 })
 </script>
 
 <style lang="less" scoped>
-
 .home {
   width: 100%;
   height: 100%;

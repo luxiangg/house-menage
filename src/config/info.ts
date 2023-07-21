@@ -5,4 +5,7 @@ export const API_INFO_CONFIG = {
   getInformation: () => resolveUrl("/information"),
   setInformation: () => resolveUrl("/set/information"),
   delInformation: () => resolveUrl("/del/information"),
+  addInformation: () => resolveUrl("/add/information"),
+  searchInformation: () => resolveUrl("/search/information"),
+  searchCheckInformation: () => resolveUrl("/searchCheck/information"),
 }
