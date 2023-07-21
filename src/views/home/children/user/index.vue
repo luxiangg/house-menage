@@ -35,9 +35,10 @@ const columns = [
 ]
 const data = ref([])
 const searchVal = ref<string>("")
-
+//搜索时间
 const onSearch = async (searchValue: string) => {
   console.log("or use this.value", searchVal.value)
+  //调用后端搜索接口，传递搜索内容
   let result = await request.get("/dev/user/search", {
     params: {
       searchVal: searchValue,
@@ -51,6 +52,7 @@ const getUserList = async () => {
   console.log(result)
   data.value = result.data.data
 }
+//删除
 const delUser = async (uid: number) => {
   let result = await request.get("/dev/user/delete", {
     params: {

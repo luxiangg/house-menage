@@ -14,19 +14,29 @@
   </div>
 </template>
 <script lang="ts" setup>
-import request from "../../utils/request"
-import { toRaw, ref } from "vue"
+import { useUserService } from "@/api/user"
+import { ref } from "vue"
+import { useRouter } from "vue-router"
 interface FormState {
   username: string
   password: string
 }
+const router = useRouter()
+const userService = useUserService()
 const formState = ref<FormState>({
   username: "",
   password: "",
 })
+//表单字段校验通过
 const onFinish = async (values: any) => {
   console.log("Success:", values)
-  let result = await request.post("/api/login", formState.value)
+  let result = await userService.login(values)
+  if (result.code == 200) {
+    localStorage.setItem("token", result.token)
+    router.push({
+      name: "Houses",
+    })
+  }
   console.log(result)
 }
 const onFinishFailed = (errorInfo: any) => {

@@ -14,6 +14,7 @@
       </template>
     </template>
   </a-table>
+  <!-- 公用弹框 -->
   <a-modal v-model:open="open" :title="isEdit" @ok="handleOk">
     <a-form ref="formRef" :model="formState" name="basic" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }" autocomplete="off">
       <a-form-item label="部门名称" name="name" :rules="[{ required: true, message: 'Please input your name!' }]">
@@ -38,6 +39,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue"
 import request from "../../utils/request"
+//表单类型
 interface FormState {
   id?: number
   name: string
@@ -73,8 +75,8 @@ const columns = [
   },
 ]
 const formRef = ref()
-const isEdit = ref<string>("新增")
-const open = ref<boolean>(false)
+const isEdit = ref<string>("新增") //判断弹出新增还是编辑
+const open = ref<boolean>(false) //控制弹框显影变量
 const formState = ref<FormState>({
   name: "",
   charge: "",
@@ -93,7 +95,7 @@ const handleOk = async () => {
       console.log(res, "ff")
       open.value = false
       if (isEdit.value == "新增") {
-        addPort()
+        addPort() //新增函数
         getUserList()
       } else {
         let result = await request.post("/dev/staff/portEdit", formState.value)
@@ -117,6 +119,7 @@ const onSearch = async (searchValue: string) => {
   console.log(result)
   data.value = result.data.data
 }
+//获取列表函数
 const getUserList = async () => {
   let result = await request.get("/dev/staff/portList")
   data.value = result.data.data
@@ -143,6 +146,7 @@ const reset = () => {
   searchVal.value = ""
   getUserList()
 }
+//挂载实例完成后获取列表
 onMounted(() => {
   getUserList()
 })
