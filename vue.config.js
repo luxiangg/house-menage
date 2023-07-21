@@ -6,7 +6,7 @@ module.exports = defineConfig({
     // 配置host
     host: "localhost",
     // 端口号
-    port: 8088,
+    port: 8080,
     // 跨域代理
     proxy: {
       [dynamicProxyName]: {
