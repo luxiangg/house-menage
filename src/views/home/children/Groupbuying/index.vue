@@ -63,12 +63,8 @@
 import { onMounted, ref } from "vue"
 import type { Ref } from "vue"
 import request from "../../../../utils/request"
-interface DataItem {
-  key: string
-  name: string
-  age: number
-  address: string
-}
+import { group } from "@/interface/model/Group"
+
 const columns = [
   {
     title: "序号",
@@ -116,43 +112,44 @@ const columns = [
     key: "Controls",
   },
 ]
-const dataSource: Ref<DataItem[]> = ref([])
-let arr = ref([])
+const dataSource = ref<Array<group>>([])
+let arr = ref<Array<group>>([])
 onMounted(() => {
   list()
 })
+//列表数据
 const list = async () => {
-  const data = (await request.get("/api/information")).data.data
+  const data = (await request.get("/dev/information")).data.data
   if (data.length > 0) {
-    arr.value = data.sort((a: any, b: any) => {
-      return a.id - b.id
+    arr.value = data.sort((arrItem: group, brrItem: group) => {
+      return arrItem.id - brrItem.id
     })
-    dataSource.value = data.sort((a: any, b: any) => {
-      return a.id - b.id
+    dataSource.value = data.sort((arrItem: group, brrItem: group) => {
+      return arrItem.id - brrItem.id
     })
-    dataSource.value.forEach((item: any) => {
-      if (item.status == 1 && item.anyStatus == 1) {
-        item.status = "已开团"
-        item.anyStatus = "正常"
+    dataSource.value.forEach((dataSourceItem: group) => {
+      if (dataSourceItem.status == 1 && dataSourceItem.anyStatus == 1) {
+        dataSourceItem.status = "已开团"
+        dataSourceItem.anyStatus = "正常"
       } else {
-        item.status = "未开团"
-        item.anyStatus = "关闭"
+        dataSourceItem.status = "未开团"
+        dataSourceItem.anyStatus = "关闭"
       }
     })
   } else {
     dataSource.value = []
   }
 }
-const delStaff = async (e: number) => {
-  const data = await request.delete("/api/del/information", { params: { id: e } })
+const delStaff = async (id: number) => {
+  const data = await request.delete("/dev/del/information", { params: { id: id } })
   list()
 }
-const selectChange = (selectItem: any) => {
+const selectChange = (selectItem: group) => {
   if (selectItem == "请选择") {
     dataSource.value = arr.value
   } else {
-    const filterArr = arr.value.filter((item: any) => {
-      return item.status == selectItem
+    const filterArr = arr.value.filter((Arritem: group) => {
+      return Arritem.status == selectItem
     })
     dataSource.value = filterArr
   }

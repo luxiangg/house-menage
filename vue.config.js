@@ -1,13 +1,19 @@
 const { defineConfig } = require("@vue/cli-service")
+const dynamicProxyName = process.env.VUE_APP_API_URL
 module.exports = defineConfig({
   transpileDependencies: true,
+  lintOnSave: true,
   devServer: {
+    // 配置host
+    host: "localhost",
+    // 端口号
+    port: 8080,
+    // 跨域代理
     proxy: {
-      "/api": {
-        // 代理标识, 如果出现了这个就代表需要代理
+      [dynamicProxyName]: {
         target: "http://127.0.0.1:7001",
         pathRewrite: {
-          "^/api": "", // 重写路由, 把想替换掉的路由地址替换为空或者别的
+          [`^${dynamicProxyName}`]: "",
         },
       },
     },
