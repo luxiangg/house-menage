@@ -1,1 +1,1 @@
-VUE_APP_API_URL="/pro"
+VUE_APP_API_URL = "/pro"

@@ -9,7 +9,7 @@
 <style lang="less" scoped>
 .header {
   width: 100%;
-  height: 100%;
+  height: 70px;
   background: rgba(67, 129, 230, 1);
   line-height: 70px;
   h3 {

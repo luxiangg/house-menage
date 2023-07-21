@@ -1,4 +1,4 @@
-import { request } from "@/utils/request"
+import request from "@/utils/request"
 import { API_INFO_CONFIG } from "@/config/info"
 import { InfoManageType } from "@/interface/model/info"
 import { AxiosError } from "axios"

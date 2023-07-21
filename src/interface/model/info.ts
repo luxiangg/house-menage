@@ -10,3 +10,4 @@ export namespace InfoManageType {
     updated_at: string
   }
 }
+// /set/information

@@ -1,4 +1,4 @@
-import { request } from "@/utils/request"
+import request from "@/utils/request"
 import { API_BROKER_CONFIG } from "@/config/broker"
 import { BroKerManageType } from "@/interface/model/BroKer"
 import { AxiosError } from "axios"

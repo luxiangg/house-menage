@@ -1,7 +1,6 @@
-
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios"
 
-import { message } from 'ant-design-vue'
+import { message } from "ant-design-vue"
 const request = axios.create({
   timeout: 3000,
 })
@@ -30,11 +29,7 @@ request.interceptors.response.use(
     const status = error.response?.status
     switch (status) {
       case 401:
-        message.error(error.response?.data.msg, 1, () => {
-          // signOut()
-          const pathUrl = location.href.split("/")
-          window.location.href = `/user/login?redirect=${encodeURIComponent("/" + pathUrl[3])}`
-        })
+        message.error("没有找到")
         break
       case 406:
         message.error("暂无数据！")
@@ -49,4 +44,4 @@ request.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-export { request }
+export default request

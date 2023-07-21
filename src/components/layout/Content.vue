@@ -9,9 +9,7 @@
           <router-view></router-view>
         </div>
       </a-layout-content>
-      <a-layout-footer style="text-align: center">
-      八维第二，无人第一
-      </a-layout-footer>
+      <a-layout-footer style="text-align: center"> 八维第二，无人第一 </a-layout-footer>
     </a-layout>
   </div>
 </template>
