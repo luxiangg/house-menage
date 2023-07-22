@@ -22,5 +22,7 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-inferrable-types": "off",
     "no-dupe-else-if": "off",
+    "prettier/prettier": "off",
+    "no-redeclare": "off",
   },
 }
